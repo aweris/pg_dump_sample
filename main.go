@@ -23,7 +23,7 @@ type Options struct {
 	ManifestFile     string
 	OutputFile       string
 	Database         string
-	UseTls           bool
+	UseTLS           bool
 }
 
 func parseArgs() (*Options, error) {
@@ -34,7 +34,7 @@ func parseArgs() (*Options, error) {
 		NoPasswordPrompt bool   `short:"w" long:"no-password" description:"Don't prompt for password"`
 		ManifestFile     string `short:"f" long:"manifest-file" description:"Path to manifest file"`
 		OutputFile       string `short:"o" long:"output-file" description:"Path to the output file"`
-		UseTls           bool   `short:"s" long:"tls" description:"Use SSL/TLS database connection"`
+		UseTLS           bool   `short:"s" long:"tls" description:"Use SSL/TLS database connection"`
 		Help             bool   `long:"help" description:"Show help"`
 	}
 
@@ -96,7 +96,7 @@ func parseArgs() (*Options, error) {
 		Password:         Password,
 		ManifestFile:     opts.ManifestFile,
 		OutputFile:       opts.OutputFile,
-		UseTls:           opts.UseTls,
+		UseTLS:           opts.UseTLS,
 		Database:         Database,
 	}, nil
 }
@@ -142,7 +142,7 @@ func main() {
 	db, err := connectDB(&pg.Options{
 		Addr:     fmt.Sprintf("%s:%d", opts.Host, opts.Port),
 		Database: opts.Database,
-		SSL:      opts.UseTls,
+		SSL:      opts.UseTLS,
 		User:     opts.Username,
 		Password: opts.Password,
 	})
@@ -161,7 +161,7 @@ func main() {
 		db, err = connectDB(&pg.Options{
 			Addr:     fmt.Sprintf("%s:%d", opts.Host, opts.Port),
 			Database: opts.Database,
-			SSL:      opts.UseTls,
+			SSL:      opts.UseTLS,
 			User:     opts.Username,
 			Password: password,
 		})
