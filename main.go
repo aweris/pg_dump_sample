@@ -11,6 +11,7 @@ import (
 	"golang.org/x/crypto/ssh/terminal"
 	pg "gopkg.in/pg.v4"
 
+	"github.com/aweris/pg_dump_sample/database"
 	"github.com/aweris/pg_dump_sample/dump"
 )
 
@@ -101,18 +102,6 @@ func parseArgs() (*Options, error) {
 	}, nil
 }
 
-func connectDB(opts *pg.Options) (*pg.DB, error) {
-	db := pg.Connect(opts)
-	var model []struct {
-		X string
-	}
-	_, err := db.Query(&model, `SELECT 1 AS x`)
-	if err != nil {
-		return nil, err
-	}
-	return db, nil
-}
-
 func readPassword(username string) (string, error) {
 	fmt.Fprintf(os.Stderr, "Password for %s: ", username)
 	password, err := terminal.ReadPassword(int(syscall.Stdin))
@@ -139,7 +128,7 @@ func main() {
 	}
 
 	// Connect to the DB
-	db, err := connectDB(&pg.Options{
+	db, err := database.ConnectDB(&pg.Options{
 		Addr:     fmt.Sprintf("%s:%d", opts.Host, opts.Port),
 		Database: opts.Database,
 		SSL:      opts.UseTLS,
@@ -158,7 +147,7 @@ func main() {
 		}
 
 		// Try again, this time with password
-		db, err = connectDB(&pg.Options{
+		db, err = database.ConnectDB(&pg.Options{
 			Addr:     fmt.Sprintf("%s:%d", opts.Host, opts.Port),
 			Database: opts.Database,
 			SSL:      opts.UseTLS,
