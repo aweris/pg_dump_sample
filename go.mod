@@ -1,4 +1,4 @@
-module pg_dump_sample
+module github.com/aweris/pg_dump_sample
 
 go 1.15
 
