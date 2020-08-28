@@ -1,3 +1,4 @@
-*.sw[op]
-pg_dump_sample
-.tags
+# Project Directories
+bin/
+vendor/
+build/
